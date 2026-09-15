@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <!-- PyScript CSS -->
+        <link rel="stylesheet" href="https://pyscript.net/releases/2026.7.2/core.css" />
+    <!-- PyScript JavaScript -->
+        <script type="module" src="https://pyscript.net/releases/2026.7.2/core.js"></script>
+    <title>Sku</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fdbad5, #b46673);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            height: 55px;
+            background: #791d3d;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            font-size: 13px;
+        }
+
+        .logo {
+            font-weight: bold;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-right a {
+            color: #ddd;
+        }
+
+        .nav-right a:hover {
+            color: white;
+        }
+
+        .container {
+            width: 367px;
+            margin: 28px auto;
+            background: white;
+            border-radius: 9px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+        }
+
+        .header {
+            background: linear-gradient(90deg, #d04a75, #c65f88);
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .barcode {
+            font-size: 23px;
+        }
+
+        .header h1 {
+            margin: 5px 0;
+            font-size: 18px;
+        }
+
+        .header p {
+            margin: 0;
+            font-size: 9px;
+            color: #ddd;
+        }
+
+        .form {
+            padding: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            font-size: 11px;
+            font-weight: bold;
+            color: #242424;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            height: 26px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+            font-size: 10px;
+        }
+
+        .generate {
+            width: 100%;
+            height: 27px;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(90deg, #cf6295, #d8648b);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .result {
+            border-top: 1px solid #ddd;
+            margin-top: 13px;
+            padding: 15px 5px;
+            text-align: center;
+            min-height: 55px;
+        }
+
+        .sku-highlight {
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #c15970;
+        }
+         .back-button {
+            display: block;
+            margin: 0 auto 15px auto;
+            border: none;
+            background: none;
+            color: #555;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 33px;
+            background: #791d3d;
+            color: #ddd;
+            text-align: center;
+            padding: 9px;
+            font-size: 9px;
+        }
+
+    </style>
+
+</head>
+
+<!-- Navigate -->
+<body>
+    <div class="navbar">
+        <div class="logo">
+            Skewer
+        </div>
+
+    <div class="nav-right">
+        <a href="sku.html">
+            ♡ SKU Generator
+        </a>
+
+        <a href="receipt.html">
+            ● Receipt Generator
+        </a>   
+
+    </div>
+
+    </div>
+
+   <!-- SKU Generator -->
+    <div class="container">
+        <div class="header">
+            <div class="barcode">
+                 𝄃𝄃𝄂𝄂𝄀𝄁𝄃𝄂𝄂𝄃
+            </div>
+
+            <h1>
+                SKU Generator
+            </h1>
+
+            <p>
+                Makes a code per product !
+            </p>
+        </div>
+
+<!--Creates the options for the category selector  -->
+        <div class="form">
+            <div class="form-group">
+                <label>
+                    🏷 Category
+                </label>
+                <select id="category">
+
+                    <option value="Cakes">
+                        Cakes
+                    </option>
+
+                    <option value="Cookies & Biscuits">
+                        Cookies & Biscuits
+                    </option>
+
+                    <option value="Cupcakes">
+                        Cupcakes
+                    </option>
+
+                    <option value="Brownies">
+                        Brownies
+                    </option>
+
+                    <option value="Beverages">
+                        Beverages
+                    </option>
+
+                </select>
+
+            </div>
+
+<!-- The textbox for the product -->
+        <div class="form-group">
+            <label>
+                ♡ Product Name
+            </label>
+
+            <input type="text"id="product" placeholder="e.g. Chocolate Cake">
+
+        </div>
+
+<!-- The textbox for the stock quantity -->
+         <div class="form-group">
+            <label>
+                ♡ Stock Quantity
+            </label>
+
+            <input type="num"id="stock"placeholder="e.g. 50">
+
+        </div>
+            <!-- GENERATE -->
+            <button class="generate"py-click="generate_sku">
+                Generate SKU
+            </button>
+
+<!-- The result, where the generated sku will appear -->
+        <div class="result">
+            <div id="result">
+                Your generated SKU will appear here : 
+            </div>
+
+        </div>
+<!-- Guides the user back to the home page/main page -->
+             <button class="back-button" onclick="location='index.html'">
+                Back to Homepage
+            </button>
+
+        </div>
+
+    </div>
+
+        <div class="footer">
+            ♡ SKU Generator — 1st Quarter Project - Lozano 10-Topaz
+        </div>
+
+    <py-script src="sku.py"></py-script>
+
+</body>
+
+</html>

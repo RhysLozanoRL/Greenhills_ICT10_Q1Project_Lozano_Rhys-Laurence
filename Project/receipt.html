@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <!-- PyScript CSS -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2026.7.2/core.css" />
+    <!-- PyScript JavaScript -->
+    <script type="module" src="https://pyscript.net/releases/2026.7.2/core.js"></script>
+    <title>Receipt</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #fdbad5, #b46673);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            height: 55px;
+            background: #791d3d;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            font-size: 13px;
+        }
+
+        .logo {
+            font-weight: bold;
+        }
+
+        .nav-right {
+            color: #ddd;
+        }
+
+        .container {
+            width: 350px;
+            margin: 25px auto;
+            background: white;
+            border-radius: 7px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+
+        .shop-header {
+            background: linear-gradient(90deg, #d04a75, #c65f88);
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .coffee-icon {
+            font-size: 25px;
+        }
+
+        .shop-header h1 {
+            font-size: 18px;
+            margin: 4px 0;
+        }
+
+        .shop-header p {
+            font-size: 10px;
+            margin: 0;
+            color: #ddd;
+        }
+
+        .menu {
+            padding: 12px;
+        }
+
+        .menu-title {
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eeeeee;
+            padding: 9px 5px;
+            font-size: 11px;
+            color: #555;
+        }
+
+        .item-left {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .item input {
+            width: 15px;
+            height: 15px;
+        }
+
+        .price {
+            color: #670d2e;
+            font-weight: bold;
+        }
+
+        .create-button {
+            width: 100%;
+            margin-top: 12px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(90deg, #cf6295, #d8648b);
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .create-button:hover {
+            opacity: 0.85;
+        }
+
+        .receipt {
+            border-top: 1px solid #ddd;
+            margin-top: 12px;
+            padding: 12px 5px;
+            font-size: 12px;
+        }
+
+        .receipt-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+        }
+
+        .receipt-output {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            padding: 10px;
+        }
+
+        .receipt-output h2 {
+            font-family: Georgia, serif;
+            font-size: 15px;
+            color: #242424;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .line {
+            border-top: 1px solid #ddd;
+            margin: 8px 0;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 5px;
+            font-size: 12px;
+            color: #242424;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 5px;
+            font-family: Georgia, serif;
+            font-size: 14px;
+            font-weight: bold;
+            color: #242424;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 14px;
+            border-top: 1px solid #ddd;
+            margin-top: 7px;
+            padding-top: 8px;
+        }
+
+        #show {
+            text-align: center;
+            font-family: Georgia, serif;
+            font-size: 16px;
+            line-height: 1.8;
+            background-color: white;
+            padding: 25px;
+            margin: 20px auto;
+            width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .back-button {
+            display: block;
+            margin: 0 auto 15px auto;
+            border: none;
+            background: none;
+            color: #555;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 33px;
+            background: #791d3d;
+            color: #ddd;
+            text-align: center;
+            padding: 9px;
+            font-size: 9px;
+        }
+
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="navbar">
+        <div class="logo">
+            Skewer
+        </div>
+        <div class="nav-right">
+             SKU Generator ● Receipt Generator
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div class="shop-header">
+            <div class="coffee-icon">
+                ☕
+            </div>
+
+            <h1>K Bakery</h1>
+
+            <p>Sweets & Coffee Shop</p>
+
+        </div>
+
+
+        <!-- Menu -->
+
+    <div class="menu">
+        <div class="menu-title">
+                Coffee Menu
+        </div>
+
+<!-- Product 1 -->
+    <div class="item">
+        <div class="item-left">
+            <input type="checkbox"
+                id="item1" value="99">
+
+                <label for="item1">
+                    Americano
+                 </label>
+
+        </div>
+            <span class="price">
+                ₱99
+            </span>
+
+    </div>
+
+
+<!-- Product 2 -->
+    <div class="item">
+        <div class="item-left">
+            <input type="checkbox" id="item2" value="129">
+                <label for="item2">
+                    Spanish Latte
+                </label>
+
+        </div>
+            <span class="price">
+                ₱129
+            </span>
+
+    </div>
+
+<!-- Product 3 -->
+     <div class="item">
+        <div class="item-left">
+            <input type="checkbox" id="item3" value="189">
+                <label for="item3">
+                    Cold Brew Malt
+                </label>
+        </div>
+            <span class="price">
+                ₱189
+            </span>
+
+    </div>
+
+<!-- PRoduct 4 -->
+
+    <div class="item">
+        <div class="item-left">
+            <input type="checkbox" id="item4" value="159">
+                <label for="item4">
+                    Affogato
+                </label>
+
+        </div>
+            <span class="price">
+                ₱159
+            </span>
+
+    </div>
+
+<!-- Productt 5 -->
+
+    <div class="item">
+        <div class="item-left">
+             <input type="checkbox" id="item5" value="129">
+                <label for="item5">
+                    Caramel Macchiato
+                </label>
+
+        </div>
+            <span class="price">
+                 ₱129
+            </span>
+
+    </div>
+
+<!-- The button that creates the user's order -->
+    <button class="create-button" type="submit" py-click="create_order">
+         Create Order
+    </button>
+
+
+<!-- Receipt output -->
+    <div id="show" class="receipt">
+        <div style="text-align:center; color:#999;">
+            Your receipt will appear here !
+        </div>
+
+    </div>
+
+<!-- Guides the user back to the welcome or home page when clicked  -->
+    </div>
+        <button class="back-button"onclick="location='index.html'">
+             Back to Welcome Page
+        </button>
+
+     </div>
+        <div class="footer">
+            ♡ Receipt & SKU Generator — 1st Quarter Project - Lozano 10 - Topaz
+        </div>
+
+    <py-script src="receipt.py"></py-script>
+
+</body>
+
+</html>
